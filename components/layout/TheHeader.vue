@@ -25,33 +25,7 @@
         },
       ],)
 
-    // return {
-    //   search: "",
-    //   isMobileMenuOpen: false,
-    //   adtmenu: [
-    //     {
-    //       to: "/discount",
-    //       icon: "discount",
-    //       name: "Discount",
-    //     },
-    //     {
-    //       to: "/giftCard",
-    //       icon: "gift",
-    //       name: "Gift Card",
-    //     },
-    //     {
-    //       to: "/aboutUs",
-    //       icon: "about",
-    //       name: "About Us",
-    //     },
-    //     {
-    //       to: "/contact",
-    //       icon: "contact",
-    //       name: "Contact",
-    //     },
-    //   ],
-    // };
-
+    
 
 //   computed: {
 //     ...mapGetters("users", ["user", "isAuthenticated"]),
@@ -70,14 +44,15 @@
 //   },
 
 </script>
+
 <template>
     <header class="bg-blue-50">
     <div class="relative z-0 flex items-center justify-between px-6 py-1 rounded-t-md bg-orient-default">
       <!-- Logo -->
       <div class="flex items-center flex-shrink-0">
         <nuxt-link to="/">
-          <Svgs name="logo_mob" class="lg:hidden" />
-          <Svgs name="logo" class="hidden lg:block" />
+          <UISvg name="logo_mob" class="lg:hidden" />
+          <UISvg name="logo" class="hidden lg:block" />
         </nuxt-link>
       </div>
       <!-- Desktop -->
@@ -158,13 +133,13 @@
               </div>
               <div v-else class="flex">
                 <NuxtLink to="favorite">
-                  <Heroicons
+                  <UIHeroicons
                     name="favorite"
                     class="pr-1 text-white cursor-pointer mr-3"
                   />
                 </NuxtLink>
                 <NuxtLink to="/cart">
-                  <Heroicons
+                  <UIHeroicons
                     name="cart"
                     class="pr-1 text-white cursor-pointer mr-3"
                   />
@@ -186,7 +161,7 @@
               :key="item.name"
             >
               <NuxtLink :to="item.to" class="flex">
-                <Heroicons
+                <UIHeroicons
                   :name="item.icon"
                   class="pr-1 text-neon-carrot-default"
                 />
