@@ -1,8 +1,10 @@
 <script setup>
+import { useUser } from "~/stores/users";
+const user = useUser();
 // import { mapGetters } from "vuex";
     const search = ref("")
     const isMobileMenuOpen = ref(false)
-    const adtmenu = ref([
+    const adtmenu = [
         {
           to: "/discount",
           icon: "discount",
@@ -23,7 +25,7 @@
           icon: "contact",
           name: "Contact",
         },
-      ],)
+      ]
 
     
 
@@ -115,15 +117,15 @@
 
           <!-- Log buttons -->
           <div class="hidden lg:pt-1 lg:flex">
-            <div v-if="user" class="flex items-center px-4">
+            <div v-if="user.user" class="flex items-center px-4">
               <div class="flex-shrink-0 mr-3">
                 <img
                   class="w-12 h-12 rounded-full border-2 border-white"
-                  src="~/assets/images/profil.jpg"
+                  src="~/assets/img/profil.jpg"
                   alt="profil"
                 />
               </div>
-              <div v-if="user.userType === 'admin'">
+              <div v-if="user.user.userType === 'admin'">
                 <NuxtLink to="/admin/createproduct">
                   Create Product
                 </NuxtLink>
