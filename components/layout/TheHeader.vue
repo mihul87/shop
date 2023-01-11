@@ -1,6 +1,10 @@
 <script setup>
-import { useUser } from "~/stores/users";
-const user = useUser();
+import { storeToRefs } from "pinia";
+import { useUserStore } from "~/stores/users";
+
+const userStore = useUserStore();
+const {user, isAuthenticated} = storeToRefs(userStore);
+
 // import { mapGetters } from "vuex";
     const search = ref("")
     const isMobileMenuOpen = ref(false)
@@ -52,10 +56,10 @@ const user = useUser();
     <div class="relative z-0 flex items-center justify-between px-6 py-1 rounded-t-md bg-orient-default">
       <!-- Logo -->
       <div class="flex items-center flex-shrink-0">
-        <nuxt-link to="/">
+        <NuxtLink to="/">
           <UISvg name="logo_mob" class="lg:hidden" />
           <UISvg name="logo" class="hidden lg:block" />
-        </nuxt-link>
+        </NuxtLink>
       </div>
       <!-- Desktop -->
       <div class="flex-1 px-2 lg:divide-y lg:divide-gray-700 lg:px-3">
@@ -117,7 +121,7 @@ const user = useUser();
 
           <!-- Log buttons -->
           <div class="hidden lg:pt-1 lg:flex">
-            <div v-if="user.user" class="flex items-center px-4">
+            <div v-if="isAuthenticated" class="flex items-center px-4">
               <div class="flex-shrink-0 mr-3">
                 <img
                   class="w-12 h-12 rounded-full border-2 border-white"
@@ -125,7 +129,7 @@ const user = useUser();
                   alt="profil"
                 />
               </div>
-              <div v-if="user.user.userType === 'admin'">
+              <div v-if="user.userType === 'admin'">
                 <NuxtLink to="/admin/createproduct">
                   Create Product
                 </NuxtLink>
@@ -232,13 +236,13 @@ const user = useUser();
   @apply flex items-center cursor-pointer justify-center px-3 py-2 text-lg font-bold text-white transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110 duration-300;
 }
 
-.submenu-enter-active {
+/* .submenu-enter-active {
   animation: submenu 0.5s ease-out;
 }
 
 .submenu-leave-active {
   animation: submenu 0.5s ease-in reverse;
-}
+} */
 
 /* @keyframes submenu {
   from {

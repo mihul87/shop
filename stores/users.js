@@ -1,21 +1,21 @@
-import { defineStore } from 'pinia';
+// import { defineStore } from 'pinia';
 
-const state = () => ({
-    user: {
-        name: "Mihail",
-        surename: "Botnari",
-        email: "botnari@gmail.com",
-        id: "123456789",
-        userType: "admin"
-    },
-});
+export const useUserStore = defineStore("user", () => {
+     
+    const user = ref({
+            name: "Mihail",
+            surename: "Botnari",
+            email: "botnari@gmail.com",
+            id: "123456789",
+            userType: "buyer"
+            // userType: "admin"
+        });
+    
+    const isAuthenticated = computed(() => {
+        return !!user.value;
+    })
+    
+    // const actions = {};
 
-const getters = {};
-
-const actions = {};
-
-export const useUser = defineStore("user", {
-    state,
-    getters,
-    actions,
+    return {user, isAuthenticated}
 });
