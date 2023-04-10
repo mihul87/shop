@@ -15,5 +15,12 @@ export default defineNuxtConfig({
         },
       ]
     ],
-        
+    runtimeConfig: {
+      // The private keys which are only available server-side
+      FIREBASE_API_KEY: process.env.FIREBASE_API_KEY,
+      // Keys within public are also exposed client-side
+      public: {
+        FIREBASE_API_KEY: process.env.FIREBASE_API_KEY,
+      }
+    }      
 })
