@@ -2,10 +2,13 @@
 import { useUserStore } from '~/stores/users';
 import { object, string, ref as yupRef } from "yup";
 import { configure } from "vee-validate";
+import { createUser } from '~~/composables/useFirebase';
 
-const handleSubmit = (values, actions) => {
-  console.log(values);
-  actions.resetForm();
+const handleSubmit = async(values, actions) => {
+  console.log("Credential:", values.email.value, values.password.value);
+  // const credentials = await createUser(values.email.value, values.password.value);
+  // console.log(credentials);
+  // actions.resetForm();
 };
 
 configure({
@@ -27,6 +30,7 @@ const schema = object({
   
 })
 
+
 // const createUser = () => {
 //   userStore.signup({
 //     fname: fname,
@@ -44,10 +48,10 @@ const initialValues = { fname: "", lname: "", email: "", password: "", confirmed
     <div class="flex flex-col justify-center px-4 py-12 flex-2 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
       <h2 class="text-3xl font-extrabold text-center text-orient-default">Sign up</h2>
       <div class="mt-6">
+        <!-- v-slot="{meta: formMeta}" -->
         <VForm 
           :validation-schema="schema"
           :initial-values="initialValues"
-          v-slot="{meta: formMeta}"
           class="space-y-6"
           @submit="handleSubmit">
 
