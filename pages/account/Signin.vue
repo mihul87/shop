@@ -1,12 +1,48 @@
+<script setup>
+  import { object, string, ref as yupRef } from "yup";
+  import { configure } from "vee-validate";
+  import { signIn } from '~~/composables/useFirebase';
+
+
+  const handleSubmit = async(values, actions) => {
+    const credentials = await signIn(values.email.value, values.password.value);
+    console.log(credentials);
+    // actions.resetForm();
+  };
+// const login = () => {
+//     this.$store
+//       .dispatch("users/login", { email: this.email, password: this.password })
+//       .then(() => {
+//         this.email = "";
+//         this.password = "";
+//         this.$router.push("/");
+//       })
+//       .catch((error) => {
+//         this.isError = true;
+//         this.errMsg = error.code;
+//         setTimeout(() => {
+//           this.isError = false;
+//         }, 5000);
+//       });
+//   }
+
+const schema = object({
+  email: string().required().email().label("Email Address"),
+  password: string().required().min(6).label("Your Password"),
+})
+
+  const initialValues = {email: "", password: ""}
+</script>
+
 <template>
   <div class="flex w-3/4 min-h-full mx-auto my-10 text-blue-500 bg-white">
     <div class=" flex flex-col justify-center px-4 py-12 flex-2 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
       <h2 class="text-3xl font-extrabold text-center text-orient-default">Sign in</h2>
       <div class="mt-6">
+        <!-- v-slot="{meta: formMeta}" -->
         <VForm 
           :validation-schema="schema"
           :initial-values="initialValues"
-          v-slot="{meta: formMeta}"
           class="space-y-6"
           @submit="handleSubmit">
             <FormElementsVTextInput type="email" name="email" label="Email" placeholder="Email"/>
@@ -119,33 +155,6 @@
     </div>
   </div>
 </template>
-
-
-<script setup>
-import { object, string, ref as yupRef } from "yup";
-import { configure } from "vee-validate";
-
-
-const login = () => {
-    this.$store
-      .dispatch("users/login", { email: this.email, password: this.password })
-      .then(() => {
-        this.email = "";
-        this.password = "";
-        this.$router.push("/");
-      })
-      .catch((error) => {
-        this.isError = true;
-        this.errMsg = error.code;
-        setTimeout(() => {
-          this.isError = false;
-        }, 5000);
-      });
-  }
-
-const initialValues = {email: "", password: "", confirmed: "",}
-</script>
-
 
 <style scoped>
 .sign-in-btn {
