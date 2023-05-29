@@ -4,7 +4,7 @@
 
 <template>
     <div>
-        Forgot Password???
+        Forgot Password??? lets solve
     </div>
 </template>
 
