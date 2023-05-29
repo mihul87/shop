@@ -1,12 +1,15 @@
 <script setup>
   import { object, string, ref as yupRef } from "yup";
   import { configure } from "vee-validate";
-  import { signIn } from '~~/composables/useFirebase';
+  import { storeToRefs } from "pinia";
+  import { useUserStore } from "~/stores/users";
 
-
+const userStore = useUserStore();
+  
   const handleSubmit = async(values, actions) => {
-    const credentials = await signIn(values.email.value, values.password.value);
-    console.log(credentials);
+    const credentials = await userStore.signin(values);
+    console.log("User signin:", credentials.value);
+    if (credentials.value) {navigateTo("/");}
     // actions.resetForm();
   };
 // const login = () => {
@@ -61,7 +64,7 @@ const schema = object({
 
               <div class="ml-2 text-sm">
                 <nuxt-link
-                  to="/forgot-password"
+                  to="/account/forgotpassword"
                   class="font-medium text-orient-default"
                 >
                   Forgot your password?
@@ -76,7 +79,7 @@ const schema = object({
                 Sign in
               </button>
             </div>
-            <div class="text-xs leading-3 text-red-500" v-if="isError">{{ errMsg }}</div>
+            <!-- <div class="text-xs leading-3 text-red-500" v-if="isError">{{ errMsg }}</div> -->
         </VForm>
         <div class="space-y-2 text-sm font-medium text-center text-blue-600">
           <p class="text-orient-default">or</p>
@@ -149,7 +152,7 @@ const schema = object({
     <div class="relative justify-end flex-1 hidden w-0 lg:block">
       <img
         class="absolute inset-0 object-cover w-full h-full"
-        src="~assets/images/angel.jpg"
+        src="~assets/img/angel.jpg"
         alt=""
       />
     </div>

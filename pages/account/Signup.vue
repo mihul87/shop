@@ -1,13 +1,14 @@
 <script setup>
-import { useUserStore } from '~/stores/users';
 import { object, string, ref as yupRef } from "yup";
 import { configure } from "vee-validate";
-import { createUser } from '~~/composables/useFirebase';
+import { storeToRefs } from "pinia";
+import { useUserStore } from '~/stores/users';
+
+const userStore = useUserStore();
 
 const handleSubmit = async(values, actions) => {
-  console.log("Credential:", values.email.value, values.password.value);
-  // const credentials = await createUser(values.email.value, values.password.value);
-  // console.log(credentials);
+  const credentials = await userStore.signup(values);
+  if (credentials.value) {navigateTo("/");}
   // actions.resetForm();
 };
 
@@ -30,16 +31,6 @@ const schema = object({
   
 })
 
-
-// const createUser = () => {
-//   userStore.signup({
-//     fname: fname,
-//     lname: lname,
-//     email: email,
-//     password: password,
-//   })
-//   navigateTo("/");
-// }
 const initialValues = { fname: "", lname: "", email: "", password: "", confirmed: "", terms: "" };
 </script>
 
