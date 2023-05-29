@@ -32,7 +32,9 @@ const {user, isAuthenticated} = storeToRefs(userStore);
       ]
 
     
-
+const signOut = async () => {
+  await userStore.signout();
+}
 //   computed: {
 //     ...mapGetters("users", ["user", "isAuthenticated"]),
 //   },
@@ -121,7 +123,7 @@ const {user, isAuthenticated} = storeToRefs(userStore);
 
           <!-- Log buttons -->
           <div class="hidden lg:pt-1 lg:flex">
-            <div v-if="isAuthenticated" class="flex items-center px-4">
+            <div v-if="user" class="flex items-center px-4">
               <div class="flex-shrink-0 mr-3">
                 <img
                   class="w-12 h-12 rounded-full border-2 border-white"
@@ -129,7 +131,7 @@ const {user, isAuthenticated} = storeToRefs(userStore);
                   alt="profil"
                 />
               </div>
-              <div v-if="user.userType === 'admin'">
+              <div v-if="user?.userType === 'admin'">
                 <NuxtLink to="/admin/createproduct">
                   Create Product
                 </NuxtLink>
@@ -138,13 +140,13 @@ const {user, isAuthenticated} = storeToRefs(userStore);
                 </NuxtLink>
               </div>
               <div v-else class="flex">
-                <NuxtLink to="favorite">
+                <NuxtLink to="/account/favorite">
                   <UIHeroicons
                     name="favorite"
                     class="pr-1 text-white cursor-pointer mr-3"
                   />
                 </NuxtLink>
-                <NuxtLink to="/cart">
+                <NuxtLink to="/account/cart">
                   <UIHeroicons
                     name="cart"
                     class="pr-1 text-white cursor-pointer mr-3"

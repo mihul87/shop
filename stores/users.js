@@ -1,34 +1,29 @@
 // import { defineStore } from 'pinia';
+import { jsonEval } from '@firebase/util';
+import { signUp, signIn, signOut } from '~~/composables/useFirebaseAuth';
 
 export const useUserStore = defineStore("user", () => {
      
-    const user = ref(null
-        // {
-        //     // name: "Mihail",
-        //     // surename: "Botnari",
-        //     // email: "botnari@gmail.com",
-        //     // id: "123456789",
-        //     // userType: "buyer"
-        //     // userType: "admin"
-        // }
-        );
+    const user = ref(null);
     
-    const isAuthenticated = computed(() => {
-        return user.value !== null
-        // return !!user.value;
-    })
-    
-    function signup(userData) {
-        if (!userData) {
-            user.value = {
-                id: '1',
-                name: "Vasile",
-                surname: "Mahu",
-                username: userData.username,
-                email: "mahu@gmail.com"
-            }    
-        }
+    // const isAuthenticated = computed(() => {
+    //     return user.value !== null
+    //     // return !!user.value;
+    // })
+
+    async function signup(userData) {
+        user.value = await signUp(userData);
+        return user;
     }
 
-    return {user, isAuthenticated, signup}
+    async function signin(userData) {
+        user.value = await signIn(userData);
+        return user;
+    }
+
+    async function signout() {
+        user.value = await signOut();
+    }
+
+    return {user, isAuthenticated, signup, signin, signout}
 });
